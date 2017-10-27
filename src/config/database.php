@@ -5,7 +5,7 @@ return array(
   'connections' => array(
     'sqlite' => array(
       'driver'   => 'sqlite',
-      'database' => app_path().'/database/parameters.sqlite',
+      'database' => app_path().'/../database/parameters.sqlite',
       'prefix'   => '',
     ),
   )
