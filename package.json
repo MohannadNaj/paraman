@@ -1,0 +1,28 @@
+{
+  "private": true,
+  "scripts": {
+    "php-watch": "node phpunit-watcher.js",
+    "e2e": "./node_modules/.bin/nightwatch",
+    "postinstall": "node nightwatch.conf.js"
+  },
+  "devDependencies": {
+    "chokidar": "^1.7.0",
+    "karma": "^1.7.1",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-jasmine": "^1.1.0",
+    "karma-moxios": "^0.1.0",
+    "karma-notify-reporter": "^1.0.1",
+    "karma-phantomjs-launcher": "^1.0.4",
+    "karma-spec-reporter": "0.0.31",
+    "karma-webpack": "^2.0.4",
+    "lodash": "^4.17.4",
+    "mocha": "^3.5.0",
+    "nightwatch": "^0.9.16",
+    "nightwatch-custom-commands-assertions": "^1.1.0",
+    "phantomjs-prebuilt": "^2.1.15",
+    "promise-polyfill": "^6.0.2",
+    "selenium-download": "^2.0.10",
+    "sinon": "^3.3.0"
+  },
+  "dependencies": {}
+}

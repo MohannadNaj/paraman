@@ -1,0 +1,54 @@
+{
+    "name": "mohannadnaj/paraman",
+    "description": "Laravel Package for Managing App Parameters/Settings.",
+    "license": "MIT",
+    "type": "package",
+    "homepage": "https://github.com/MohannadNaj/laravel-parameters",
+    "authors": [
+      {
+        "name": "Mohannad Najjar",
+        "email": "mohannad.najjar@mail.com"
+      }
+    ],
+    "keywords": ["framework", "laravel"],
+    "require": {
+        "php": ">=5.6.4",
+        "illuminate/database": "~5.5",
+        "illuminate/http": "~5.5",
+        "illuminate/support": "~5.5"
+    },
+    "require-dev": {
+        "fzaninotto/faker": "~1.4",
+        "mockery/mockery": "~0.9",
+        "orchestra/database": "~3.5",
+        "orchestra/testbench": "~3.5",
+        "orchestra/testbench-browser-kit": "~3.5",
+        "phpunit/phpunit": "~6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Parameter\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Parameter\\": "src/",
+            "Parameter\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        },
+        "laravel": {
+            "providers": [
+                "Parameter\\Providers\\ParametersServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev"
+}
