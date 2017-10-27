@@ -28,4 +28,9 @@ class Parameter extends Model
     {
         return Carbon::parse($this->updated_at)->diffForHumans();
     }
+
+    public function getConnection()
+    {
+        return static::resolveConnection('parameters');
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace Parameter\Providers;
 
+use Config;
 use Illuminate\Support\ServiceProvider;
 use Parameter\ParametersSingleton;
 use Parameter\Parameter;
@@ -23,10 +24,23 @@ class ParametersServiceProvider extends ServiceProvider
             [
                 realpath(__DIR__.'/../../public/') => public_path('vendor/parameters'),
             ], 'public');
-
+        $this->setConnection();
         Parameter::observe(ParameterObserver::class);
     }
 
+    public function setConnection()
+    {
+      $connection = Config::get('parameters.default');
+
+      if ($connection !== 'default') {
+        $wardrobeConfig = Config::get('parameters.connections.'.$connection);
+      } else {
+        $connection = Config::get('database.default');
+        $wardrobeConfig = Config::get('database.connections.'.$connection);
+      }
+
+      Config::set('database.connections.parameters', $wardrobeConfig);
+    }
     /**
      * Register the application services.
      *
@@ -34,6 +48,9 @@ class ParametersServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->mergeConfigFrom(
+            __DIR__.'/../config/database.php', 'parameters'
+        );
         require_once(realpath(__DIR__. '/../Helpers/parameters.php'));
         new ParametersSingleton();
 

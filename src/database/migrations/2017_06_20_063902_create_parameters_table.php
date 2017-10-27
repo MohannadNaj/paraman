@@ -13,7 +13,7 @@ class CreateParametersTable extends Migration
      */
     public function up()
     {
-        Schema::create('parameters', function (Blueprint $table) {
+        Schema::connection('parameters')->create('parameters', function (Blueprint $table) {
             $table->increments('id');
 
             $table->string('name');
