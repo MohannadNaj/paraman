@@ -3,6 +3,8 @@
 namespace Parameter;
 
 use Illuminate\Support\Str;
+use File;
+use \Illuminate\Database\QueryException;
 
 class ParametersManager {
     public static $supportedTypes = ['textfield','text','file','integer','boolean'];
@@ -17,6 +19,16 @@ class ParametersManager {
         return static::$supportedTypes;
     }
 
+    public static function getDatabasePath() {
+        return config('database.connections.parameters.database');
+    }
+
+    public static function needInstallation() {
+        return (config('database.connections.parameters')
+                === config('parameters.connections.parameters_default')
+                && config('database.connections.parameters.driver') == 'sqlite'
+                && ! file_exists(static::getDatabasePath()));
+    }
     public static function getCategoryDefaults() {
 
         return ['type' => 'textfield',
@@ -26,9 +38,10 @@ class ParametersManager {
     }
 
     public static function clientData() {
-    	$parametersColumns = Parameter::getColumns();
+        $parametersColumns = static::getParametersColumns();
 
-    	return [
+        return [
+            'needInstallation' => static::needInstallation(),
             'csrfToken' => csrf_token(),
             'images_dir' => 'storage',
             'base_url' => url('/') . '/',
@@ -36,6 +49,14 @@ class ParametersManager {
             'parametersTypes'=> static::getSupportedTypes(),
         ];
     }
+    public static function getParametersColumns() {
+        try {
+            return Parameter::getColumns(); 
+        } catch (QueryException $e) {
+            return (array) json_decode(File::get(__DIR__.'/database/parameters-columns.json'));
+        }
+    }
+
     private static function getTypesInterface($type = null)
     {
     	if(is_null($type))

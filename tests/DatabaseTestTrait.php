@@ -31,6 +31,9 @@ trait DatabaseTestTrait
             'database' => $this->getTempDirectory().'/database.sqlite',
             'prefix' => '',
         ]);
+
+        $app['config']->set('database.connections.parameters', $app['config']->get('database.connections.sqlite'));
+        $app['config']->set('parameters.default', 'sqlite');
     }
 
     protected function resetDatabase()

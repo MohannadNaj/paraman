@@ -67,7 +67,7 @@ class ParametersServiceProvider extends ServiceProvider
     {
       $connection = Config::get('parameters.default');
 
-      if ($connection !== 'default') {
+      if ($connection !== 'parameters_default') {
         $wardrobeConfig = Config::get('database.connections.'.$connection);
       } else {
         $connection = Config::get('parameters.default');

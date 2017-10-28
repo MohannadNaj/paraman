@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Parameter\ParametersManager;
 use Parameter\ParametersValidator;
+use Illuminate\Database\QueryException;
 
 class ParameterController extends BaseController
 {
@@ -18,9 +19,17 @@ class ParameterController extends BaseController
 
     public function index()
     {
-        $data['parameters'] = param();
+        try {
+            $data['parameters'] = param();
+        } catch (QueryException $e) {
+            if(ParametersManager::needInstallation()) {
+                $data['parameters'] = collect([]);
+            } else {
+                throw $e;
+            }
+        }
 
-        return view('parameters::index', $data);
+        return view('parameters::index',$data );
     }
 
     public function store(Request $request)
