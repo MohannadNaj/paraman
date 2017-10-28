@@ -22,7 +22,7 @@ class ParameterController extends BaseController
         try {
             $data['parameters'] = param();
         } catch (QueryException $e) {
-            if(ParametersManager::needInstallation()) {
+            if($data['needInstallation'] = ParametersManager::needInstallation()) {
                 $data['parameters'] = collect([]);
             } else {
                 throw $e;
