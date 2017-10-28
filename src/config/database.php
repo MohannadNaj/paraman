@@ -1,9 +1,9 @@
 <?php
 
 return array(
-  'default' => 'sqlite',
+  'default' => 'default',
   'connections' => array(
-    'sqlite' => array(
+    'default' => array(
       'driver'   => 'sqlite',
       'database' => app_path().'/../database/parameters.sqlite',
       'prefix'   => '',

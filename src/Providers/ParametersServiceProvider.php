@@ -17,14 +17,49 @@ class ParametersServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadMigrationsFrom(realpath(__DIR__.'/../database/migrations'));
-        $this->loadViewsFrom(realpath(__DIR__.'/../../resources/views'), 'parameters');
-        $this->loadRoutesFrom(realpath(__DIR__.'/../routes.php'));
+        $viewsPath = realpath(__DIR__.'/../../resources/views');
+        $configPath = realpath(__DIR__.'/../config/database.php');
+        $migrationPath = realpath(__DIR__.'/../database/migrations');
+        $routesPath = realpath(__DIR__.'/../routes.php');
+        $publicPath = realpath(__DIR__.'/../../public/');
+
+        $this->mergeConfigFrom(
+            $configPath, 'parameters'
+        );
+
+        $this->loadMigrationsFrom($migrationPath);
+
+        $this->loadViewsFrom($viewsPath , 'parameters');
+
+        $this->loadRoutesFrom($routesPath);
+
         $this->publishes(
             [
-                realpath(__DIR__.'/../../public/') => public_path('vendor/parameters'),
+                $publicPath => public_path('vendor/parameters'),
             ], 'public');
+
+        $this->publishes(
+            [
+                $configPath => config_path('parameters.php'),
+            ], 'config');
+
+        $this->publishes(
+            [
+                $viewsPath => resource_path('views/vendor/parameters'),
+            ], 'views');
+
+        $this->publishes(
+            [
+                $configPath => config_path('parameters.php'),
+            ], 'config');
+
+        $this->publishes(
+            [
+                $migrationPath => database_path('migrations'),
+            ], 'migrations');
+
         $this->setConnection();
+
         Parameter::observe(ParameterObserver::class);
     }
 
@@ -33,10 +68,10 @@ class ParametersServiceProvider extends ServiceProvider
       $connection = Config::get('parameters.default');
 
       if ($connection !== 'default') {
-        $wardrobeConfig = Config::get('parameters.connections.'.$connection);
-      } else {
-        $connection = Config::get('database.default');
         $wardrobeConfig = Config::get('database.connections.'.$connection);
+      } else {
+        $connection = Config::get('parameters.default');
+        $wardrobeConfig = Config::get('parameters.connections.'.$connection);
       }
 
       Config::set('database.connections.parameters', $wardrobeConfig);
@@ -48,11 +83,7 @@ class ParametersServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(
-            __DIR__.'/../config/database.php', 'parameters'
-        );
         require_once(realpath(__DIR__. '/../Helpers/parameters.php'));
         new ParametersSingleton();
-
     }
 }
