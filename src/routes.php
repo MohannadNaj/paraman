@@ -5,6 +5,7 @@ Route::middleware('web')
      ->group(function() {
 
     Route::get('parameters','ParameterController@index')->name('parameters.index');
+    Route::get('parameters/login','ParameterController@login')->name('parameters.login');
 });
 
 Route::middleware('api')

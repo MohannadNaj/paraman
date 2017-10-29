@@ -4,8 +4,9 @@ namespace Parameter\Tests\Unit;
 
 use Mockery;
 use StdClass;
-use Parameter\Tests\UnitTestCase;
+use Parameter\Tests\User;
 use Parameter\ParametersManager;
+use Parameter\Tests\UnitTestCase;
 
 class ManagerTest extends UnitTestCase
 {
@@ -82,6 +83,38 @@ class ManagerTest extends UnitTestCase
 		unlink(ParametersManager::getDatabasePath());
 
 		$this->assertTrue(ParametersManager::needInstallation());
+	}
+
+	public function test_auth_visitor()
+	{
+		$this->assertFalse(ParametersManager::check(request()));
+	}
+
+	public function test_auth_canEditParameters_user()
+	{
+		request()->setUserResolver(function () {
+		    return new User();
+		});
+
+		$this->assertTrue(ParametersManager::check(request()));
+	}
+
+	public function test_auth_local_environment()
+	{
+		app()->detectEnvironment(function() { return 'local';});
+		$this->assertTrue(ParametersManager::check(request()));
+	}
+
+	public function test_auth_callback()
+	{
+		ParametersManager::auth(function() {
+			return false;
+		});
+		$this->assertFalse(ParametersManager::check(request()));
+		ParametersManager::auth(function() {
+			return true;
+		});
+		$this->assertTrue(ParametersManager::check(request()));
 	}
 
 }
