@@ -18,7 +18,7 @@ class ParametersServiceProvider extends ServiceProvider
     public function boot()
     {
         $viewsPath = realpath(__DIR__.'/../../resources/views');
-        $configPath = realpath(__DIR__.'/../config/database.php');
+        $configPath = realpath(__DIR__.'/../config/parameters.php');
         $migrationPath = realpath(__DIR__.'/../database/migrations');
         $routesPath = realpath(__DIR__.'/../routes.php');
         $publicPath = realpath(__DIR__.'/../../public/');
