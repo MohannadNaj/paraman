@@ -9,12 +9,18 @@ use Illuminate\Http\Response;
 use Parameter\ParametersManager;
 use Parameter\ParametersValidator;
 use Illuminate\Database\QueryException;
+use \Parameter\Http\Middlewares\ParameterMiddleware;
 
 class ParameterController extends BaseController
 {
     public function __construct()
     {
-        
+        $this->middleware(config('parameters.middleware'))->except('login');
+    }
+
+    public function login()
+    {
+
     }
 
     public function index()

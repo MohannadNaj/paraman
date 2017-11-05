@@ -8,5 +8,6 @@ return array(
       'database' => app_path().'/../database/parameters.sqlite',
       'prefix'   => '',
     ),
-  )
+  ),
+  'middleware' => Parameter\Http\Middlewares\ParameterMiddleware::class,
 );
