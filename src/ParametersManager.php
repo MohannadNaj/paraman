@@ -77,16 +77,30 @@ class ParametersManager {
 
     public static function clientData() {
         $parametersColumns = static::getParametersColumns();
+        $needInstallation = static::needInstallation();
 
-        return [
-            'needInstallation' => static::needInstallation(),
+        $clientData = [
+            'needInstallation' => $needInstallation,
             'csrfToken' => csrf_token(),
+            'appName' => config('app.name'),
             'images_dir' => 'storage',
             'base_url' => url('/') . '/',
             'parametersColumns' =>  array_fill_keys($parametersColumns, null ),
             'parametersTypes'=> static::getSupportedTypes(),
         ];
+
+        if($needInstallation)
+            $clientData['installationData'] = static::getInstallationData();
+
+        return $clientData;
     }
+
+    public static function getInstallationData() {
+        return ['databasePath' => static::getDatabasePath(),
+            'migrationPaths' => app('migrator')->getMigrationFiles(app('migrator')->paths()),
+            'command' => 'artisan migrate'];
+    }
+
     public static function getParametersColumns() {
         try {
             return Parameter::getColumns(); 

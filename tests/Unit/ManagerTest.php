@@ -117,4 +117,25 @@ class ManagerTest extends UnitTestCase
 		$this->assertTrue(ParametersManager::check(request()));
 	}
 
+	public function test_client_data_has_installation_data()
+	{
+		$this->assertTrue(ParametersManager::needInstallation());
+
+		$clientData = ParametersManager::clientData();
+
+		$this->assertArrayContains(['installationData'], array_keys($clientData));
+		$this->assertArrayContains(['databasePath','migrationPaths'], array_keys($clientData['installationData']));
+	}
+
+	public function test_client_data_has_no_installation_data_if_dont_need_installation()
+	{
+		$this->test_need_installation_database_driver_changed();
+
+		$this->assertFalse(ParametersManager::needInstallation());
+
+		$clientData = ParametersManager::clientData();
+
+		$this->assertFalse(isset($clientData['installationData']));
+	}
+
 }
