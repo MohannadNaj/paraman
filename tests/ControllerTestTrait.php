@@ -2,7 +2,8 @@
 
 namespace Parameter\Tests;
 
-abstract class ControllerTestCase extends TestCase {
+trait ControllerTestTrait
+{
 
     /**
      * @param  string  $method
@@ -10,8 +11,9 @@ abstract class ControllerTestCase extends TestCase {
      * @param  array  $data
      * @param  array  $headers
      */
-    protected function authUserJson($method, $uri, array $data = [], array $headers = [])
+    private function authUserJson($method, $uri, array $data = [], array $headers = [])
     {
         return $this->actingAs(new User())->json($method, $uri, $data, $headers);
     }
+
 }

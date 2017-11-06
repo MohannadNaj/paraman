@@ -8,28 +8,16 @@ use StdClass;
 use Parameter\Tests\User;
 use Parameter\ParametersManager;
 use Illuminate\Http\UploadedFile;
+use Parameter\Tests\DatabaseTestTrait;
 use Parameter\Tests\ControllerTestCase;
 use Illuminate\Support\Facades\Storage;
+use Parameter\Tests\ControllerTestTrait;
 
 class ParameterControllerTestCase extends ControllerTestCase
 {
+    use DatabaseTestTrait;
+
     private $uploadedFilePath;
-
-    public function setUp()
-    {
-        parent::setUp();
-    }
-
-    /**
-     * @param  string  $method
-     * @param  string  $uri
-     * @param  array  $data
-     * @param  array  $headers
-     */
-    private function authUserJson($method, $uri, array $data = [], array $headers = [])
-    {
-        return $this->actingAs(new User())->json($method, $uri, $data, $headers);
-    }
 
     public function test_index()
     {
