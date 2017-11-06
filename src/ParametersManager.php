@@ -4,8 +4,9 @@ namespace Parameter;
 
 use File;
 use Closure;
+use Exception;
 use Illuminate\Support\Str;
-use \Illuminate\Database\QueryException;
+use Illuminate\Database\QueryException;
 
 class ParametersManager {
     /**
@@ -14,6 +15,8 @@ class ParametersManager {
      * @var \Closure
      */
     public static $authUsing;
+
+    public static $needMigration = false;
 
     public static $supportedTypes = ['textfield','text','file','integer','boolean'];
 
@@ -61,6 +64,22 @@ class ParametersManager {
         return config('database.connections.parameters.database');
     }
 
+    public static function handleException(Exception $e)
+    {
+        if($e instanceof QueryException) {
+            if(static::needMigrationMessage($e->getMessage()))
+                static::$needMigration = true;
+        }
+        //->getMessage()
+    }
+    public static function needMigrationMessage($message)
+    {
+        return str_contains($message, 'no such table');
+    }
+
+    public static function needMigration() {
+        return static::$needMigration;
+    }
     public static function needInstallation() {
         return (config('database.connections.parameters')
                 === config('parameters.connections.parameters_default')
@@ -78,9 +97,9 @@ class ParametersManager {
     public static function clientData() {
         $parametersColumns = static::getParametersColumns();
         $needInstallation = static::needInstallation();
+        $needMigration = static::needMigration();
 
-        $clientData = [
-            'needInstallation' => $needInstallation,
+        $clientData = compact('needInstallation','needMigration') + [
             'csrfToken' => csrf_token(),
             'appName' => config('app.name'),
             'images_dir' => 'storage',
@@ -89,7 +108,7 @@ class ParametersManager {
             'parametersTypes'=> static::getSupportedTypes(),
         ];
 
-        if($needInstallation)
+        if($needInstallation || $needMigration)
             $clientData['installationData'] = static::getInstallationData();
 
         return $clientData;

@@ -25,14 +25,20 @@ class ParameterController extends BaseController
 
     public function index()
     {
+        $data['parameters'] = collect([]);
+
         try {
             $data['parameters'] = param();
         } catch (QueryException $e) {
-            if($data['needInstallation'] = ParametersManager::needInstallation()) {
-                $data['parameters'] = collect([]);
-            } else {
+            ParametersManager::handleException($e);
+
+            $needInstallation = ParametersManager::needInstallation();
+            $needMigration = ParametersManager::needMigration();
+
+            if(! $needInstallation && ! $needMigration)
                 throw $e;
-            }
+
+            $data = $data;// + compact('needInstallation','needMigration');
         }
 
         return view('parameters::index',$data );

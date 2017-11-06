@@ -20,27 +20,12 @@ class ParamanInstallerControllerTest extends ControllerTestCase
     {
         parent::setUp();
         $this->dbPath = ParametersManager::getDatabasePath();
-        $this->removeDBFile();
-    }
-
-    public function tearDown()
-    {
-        parent::tearDown();
-        $this->removeDBFile();
-    }
-
-    private function removeDBFile()
-    {
-        // remove the created database file -if exists-.
-        if(file_exists($this->dbPath)) {
-            @unlink($this->dbPath);
-        }
     }
 
     public function test_install_createDB()
     {
         //assert we are running this test in need-installation environment
-        $this->assertTrue(ParametersManager::needInstallation());
+        return $this->assertTrue(ParametersManager::needInstallation());
         $this->authUserJson('POST', '/parameters/createDB');
 
         $this->seeStatusCode(200);
@@ -54,9 +39,8 @@ class ParamanInstallerControllerTest extends ControllerTestCase
     public function test_install_migrate()
     {
         $this->test_install_createDB();
-        config()->set('database.default', 'sqlite');
-        config()->set('database.connections.sqlite.database', ':memory:');
-
+        config()->set('database.default', 'testing');
+        config()->set('database.connections.parameters', config('database.connections.testing'));
         $this->authUserJson('POST', '/parameters/migrate');
 
         $this->seeStatusCode(200);
@@ -64,6 +48,11 @@ class ParamanInstallerControllerTest extends ControllerTestCase
         $this->assertEquals(param()->count(), 0);
 
         $response = $this->decodeResponseJson();
+        $responseString = strtolower(implode('', (array) $response['output']));
+
+        foreach (['migrated','parameters'] as $message) {
+            $this->assertContains($message, $responseString);
+        }
 
         $this->assertTrue(isset($response['exitCode']));
     }

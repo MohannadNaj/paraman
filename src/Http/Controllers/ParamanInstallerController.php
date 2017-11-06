@@ -27,7 +27,8 @@ class ParamanInstallerController extends BaseController
     public function migrate()
     {
         $exitCode = Artisan::call('migrate');
+        $output = Artisan::output();
 
-        return ['exitCode' => $exitCode];
+        return compact('exitCode','output');
     }
 }

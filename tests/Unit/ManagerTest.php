@@ -2,6 +2,7 @@
 
 namespace Parameter\Tests\Unit;
 
+use File;
 use Mockery;
 use StdClass;
 use Parameter\Tests\User;
