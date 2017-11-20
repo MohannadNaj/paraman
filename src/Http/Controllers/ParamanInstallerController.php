@@ -17,7 +17,7 @@ class ParamanInstallerController extends BaseController
     {
         $path = ParametersManager::getDatabasePath();
 
-        $creation = File::put($path, '');
+        $creation = File::exists($path) ? false : File::put($path, '');
 
         $status = $creation !== false;
 
