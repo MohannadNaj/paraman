@@ -19,8 +19,9 @@
 </head>
 <body>
     <div class="container-fluid" id="app">
-        <paraman :parameters_list='{!! $parameters->toJson(JSON_HEX_APOS) !!}'></paraman>
+        <paraman :parameters-list='{!! $parameters->toJson(JSON_HEX_APOS) !!}'></paraman>
     </div>
+<script src="{{asset('vendor/parameters/js/core.js') . '?v='.Illuminate\Support\Str::random()}}"></script>
 <script src="{{asset('vendor/parameters/js/app.js') . '?v='.Illuminate\Support\Str::random()}}"></script>
 </body>
 </html>
