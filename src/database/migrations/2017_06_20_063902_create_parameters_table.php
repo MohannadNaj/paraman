@@ -40,6 +40,6 @@ class CreateParametersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('parameters');
+        Schema::connection('parameters')->dropIfExists('parameters');
     }
 }
