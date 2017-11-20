@@ -74,7 +74,7 @@ class ParametersManager {
     }
     public static function needMigrationMessage($message)
     {
-        return str_contains($message, 'no such table');
+        return str_contains($message, 'no such table') || str_contains($message, 'does not exist');
     }
 
     public static function needMigration() {
