@@ -10,6 +10,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
+    <link href="{{asset('vendor/parameters/css/core.css')}}" rel="stylesheet">
     <link href="{{asset('vendor/parameters/css/app.css')}}" rel="stylesheet">
     <!-- Scripts -->
     <script>

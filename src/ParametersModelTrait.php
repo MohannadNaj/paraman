@@ -5,7 +5,7 @@ namespace Parameter;
 use Parameter\ParametersManager;
 
 trait ParametersModelTrait {
-
+	// allow users to extend paraman types
     public function getValue()
     {
         return $this->value;
