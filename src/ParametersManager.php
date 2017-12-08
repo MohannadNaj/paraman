@@ -22,6 +22,8 @@ class ParametersManager {
 
     private static $typesInterface = 'Parameter\\Types\\%s\\';
 
+    private static $extensionTypes = [];
+
     public static $addCategoryRequestFields = ['is_category', 'value', 'name','type','label'];
 
     public static $createParameterFields = ['name','type','label','category_id'];
@@ -57,7 +59,7 @@ class ParametersManager {
     }
 
     public static function getSupportedTypes() {
-        return static::$supportedTypes;
+        return array_merge(array_keys(static::$extensionTypes) , static::$supportedTypes);
     }
 
     public static function getDatabasePath() {
@@ -75,6 +77,18 @@ class ParametersManager {
     public static function needMigrationMessage($message)
     {
         return str_contains($message, 'no such table') || str_contains($message, 'does not exist');
+    }
+
+    public static function extend($type, $class) {
+        if(! Str::endsWith($class, '\\')) {
+            $class .= '\\';
+        }
+
+        static::$extensionTypes[lcfirst($type)] = $class;
+    }
+
+    public static function unextend($type) {
+        unset(static::$extensionTypes[lcfirst($type)]);
     }
 
     public static function needMigration() {
@@ -132,6 +146,9 @@ class ParametersManager {
     {
     	if(is_null($type))
 	    	return static::$typesInterface;
+
+        if(in_array($type, array_keys(static::$extensionTypes)))
+            return static::$extensionTypes[$type];
 
 	    return sprintf(static::$typesInterface, ucfirst($type));
     }

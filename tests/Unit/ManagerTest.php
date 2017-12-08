@@ -24,6 +24,23 @@ class ManagerTest extends UnitTestCase
 			ParametersManager::builderClassPath('text'));
 	}
 
+	public function test_can_extend_types()
+	{
+		$oldTypes = ParametersManager::getSupportedTypes();
+
+		ParametersManager::extend('custom', 'App\Custom');
+		
+		$oldTypes[] = 'custom';
+
+		$this->assertArrayContains(['custom'], ParametersManager::getSupportedTypes());
+		$this->assertArrayContains($oldTypes, ParametersManager::getSupportedTypes());
+
+		$this->assertEquals('App\Custom\Builder' ,
+			ParametersManager::builderClassPath('custom'));
+
+		ParametersManager::unextend('custom');
+	}
+
 	public function test_get_category_defaults()
 	{
 		$categoryDefaults = ParametersManager::getCategoryDefaults();

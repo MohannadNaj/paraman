@@ -101,6 +101,16 @@ class ParameterModelTestCase extends ModelTestCase
         $this->assertEquals(9, param()->last()->value);
     }
 
+    public function test_extend_types()
+    {
+        ParametersManager::extend('customType','Parameter\Tests\Model\CustomType');
+
+        Parameter::create(['type'=> 'customType', 'value'=> 'foo bar','name'=>'custom_foo_bar']);
+
+        $this->assertEquals(param('custom_foo_bar'), 'fo');
+        $this->assertArrayContains(['customType'], ParametersManager::clientData()['parametersTypes']);
+        ParametersManager::unextend('customType');
+    }
     public function test_changes_are_logged()
     {
         $parameter = factory(Parameter::class)->create(['type'=>'boolean','value'=> false]);
