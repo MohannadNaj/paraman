@@ -132,4 +132,15 @@ class ParameterModelTestCase extends ModelTestCase
         $this->assertSame("value", array_get($parameter->meta, 'logs.1.field'));
         $this->assertSame( false, array_get($parameter->meta, 'logs.1.new'));
     }
+
+    public function test_helper_method_can_create()
+    {
+        $param = param('not_exist_parameter_name', 'boolean');
+
+        // assert creation
+        $this->assertEquals(param()->count(), 1);
+        // assert proper casting
+        $this->assertSame($param, false);
+    }
+
 }
