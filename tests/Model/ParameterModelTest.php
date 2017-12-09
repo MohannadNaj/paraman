@@ -139,8 +139,15 @@ class ParameterModelTestCase extends ModelTestCase
 
         // assert creation
         $this->assertEquals(param()->count(), 1);
-        // assert proper casting
+        // assert returning value & proper casting
         $this->assertSame($param, false);
+    }
+
+    public function test_helper_method_create_initial_value()
+    {
+        $param = param('foo_bar_param', 'textfield', 'foo bar');
+
+        $this->assertSame(param('foo_bar_param'), 'foo bar');
     }
 
 }

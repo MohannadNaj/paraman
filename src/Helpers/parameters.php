@@ -4,7 +4,7 @@ use Parameter\Parameter;
 
 // return parameters collection, or a specified parameter value
 if (! function_exists('param')) {
-    function param($name = null, $type = null)
+    function param($name = null, $type = null, $value = null)
     {
         // if we are using the method to return a specified parameter value, e.g: param('some_param')
         if ($name) {
@@ -14,7 +14,7 @@ if (! function_exists('param')) {
         	}
 
             if(! $param) {
-                $param = Parameter::create(compact('name','type'));
+                $param = Parameter::create(compact('name','type','value'));
             }
 
     		return $param ? $param->getValue() : null;
