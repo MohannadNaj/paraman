@@ -1,9 +1,9 @@
 <?php
 
-namespace Parameter\Tests;
+namespace Paraman\Tests;
 
 use Illuminate\Database\Schema\Blueprint;
-use Parameter\Providers\ParametersServiceProvider;
+use Paraman\Providers\ParametersServiceProvider;
 use Orchestra\Testbench\BrowserKit\TestCase as OrchestraTestCase;
 
 use Mockery;

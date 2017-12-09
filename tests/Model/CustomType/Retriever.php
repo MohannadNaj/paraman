@@ -1,8 +1,8 @@
 <?php
 
-namespace Parameter\Tests\Model\CustomType;
+namespace Paraman\Tests\Model\CustomType;
 
-use Parameter\Types\BaseValueRetriever;
+use Paraman\Types\BaseValueRetriever;
 
 class Retriever extends BaseValueRetriever
 {

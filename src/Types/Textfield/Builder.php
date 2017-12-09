@@ -1,8 +1,8 @@
 <?php
 
-namespace Parameter\Types\Textfield;
+namespace Paraman\Types\Textfield;
 
-use Parameter\Types\BaseBuilder;
+use Paraman\Types\BaseBuilder;
 
 class Builder extends BaseBuilder
 {

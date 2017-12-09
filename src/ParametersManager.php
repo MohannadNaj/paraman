@@ -1,6 +1,6 @@
 <?php
 
-namespace Parameter;
+namespace Paraman;
 
 use File;
 use Closure;
@@ -20,7 +20,7 @@ class ParametersManager {
 
     public static $supportedTypes = ['textfield','text','file','integer','boolean'];
 
-    private static $typesInterface = 'Parameter\\Types\\%s\\';
+    private static $typesInterface = 'Paraman\\Types\\%s\\';
 
     private static $extensionTypes = [];
 

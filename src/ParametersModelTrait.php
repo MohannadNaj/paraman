@@ -1,8 +1,8 @@
 <?php
 
-namespace Parameter;
+namespace Paraman;
 
-use Parameter\ParametersManager;
+use Paraman\ParametersManager;
 
 trait ParametersModelTrait {
 	// allow users to extend paraman types

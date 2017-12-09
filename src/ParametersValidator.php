@@ -1,8 +1,8 @@
 <?php
 
-namespace Parameter;
+namespace Paraman;
 
-use Parameter\ParametersManager;
+use Paraman\ParametersManager;
 
 class ParametersValidator {
 	public static function newRules($type)

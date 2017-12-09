@@ -1,7 +1,7 @@
 <?php
-namespace Parameter\Types\Text;
+namespace Paraman\Types\Text;
 
-use Parameter\Types\BaseRules;
+use Paraman\Types\BaseRules;
 
 class Rules extends BaseRules
 {

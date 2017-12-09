@@ -1,12 +1,12 @@
 <?php
 
-namespace Parameter\Providers;
+namespace Paraman\Providers;
 
 use Config;
 use Illuminate\Support\ServiceProvider;
-use Parameter\ParametersSingleton;
-use Parameter\Parameter;
-use Parameter\ParameterObserver;
+use Paraman\ParametersSingleton;
+use Paraman\Parameter;
+use Paraman\ParameterObserver;
 
 class ParametersServiceProvider extends ServiceProvider
 {

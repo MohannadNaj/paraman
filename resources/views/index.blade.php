@@ -14,7 +14,7 @@
     <link href="{{asset('vendor/parameters/css/app.css')}}" rel="stylesheet">
     <!-- Scripts -->
     <script>
-        window.Paraman = <?php echo json_encode(Parameter\ParametersManager::clientData()); ?>;
+        window.Paraman = <?php echo json_encode(Paraman\ParametersManager::clientData()); ?>;
 
     </script>
 

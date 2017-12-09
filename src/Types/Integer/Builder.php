@@ -1,8 +1,8 @@
 <?php
 
-namespace Parameter\Types\Integer;
+namespace Paraman\Types\Integer;
 
-use Parameter\Types\BaseBuilder;
+use Paraman\Types\BaseBuilder;
 
 class Builder extends BaseBuilder
 {

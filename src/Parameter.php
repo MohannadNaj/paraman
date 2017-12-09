@@ -1,9 +1,9 @@
 <?php
 
-namespace Parameter;
+namespace Paraman;
 
 use Illuminate\Database\Eloquent\Model;
-use Parameter\ParametersModelTrait;
+use Paraman\ParametersModelTrait;
 use Carbon\Carbon;
 
 class Parameter extends Model
@@ -17,7 +17,7 @@ class Parameter extends Model
 
     public function category()
     {
-        return $this->belongsTo('Parameter\Parameter');
+        return $this->belongsTo('Paraman\Parameter');
     }
 
     public function getHumanizedCreatedAtAttribute($value)

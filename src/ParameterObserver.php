@@ -1,6 +1,6 @@
 <?php
 
-namespace Parameter;
+namespace Paraman;
 
 class ParameterObserver {
 

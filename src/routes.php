@@ -1,7 +1,7 @@
 <?php
 
 Route::middleware('web')
-     ->namespace('Parameter\Http\Controllers')
+     ->namespace('Paraman\Http\Controllers')
      ->group(function() {
 
     Route::get('parameters','ParameterController@index')->name('parameters.index');
@@ -9,7 +9,7 @@ Route::middleware('web')
 });
 
 Route::middleware('api')
-     ->namespace('Parameter\Http\Controllers')
+     ->namespace('Paraman\Http\Controllers')
      ->group(function() {
     Route::post('parameters','ParameterController@store')->name('parameters.store');
     Route::patch('parameters/{parameter}','ParameterController@update')->name('parameters.update');

@@ -1,7 +1,7 @@
 <?php
 
-namespace Parameter\Types;
-use Parameter\Parameter;
+namespace Paraman\Types;
+use Paraman\Parameter;
 
 abstract class BaseValueRetriever
 {

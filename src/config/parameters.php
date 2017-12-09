@@ -9,5 +9,5 @@ return array(
       'prefix'   => '',
     ),
   ),
-  'middleware' => Parameter\Http\Middlewares\ParameterMiddleware::class,
+  'middleware' => Paraman\Http\Middlewares\ParameterMiddleware::class,
 );

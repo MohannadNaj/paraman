@@ -1,8 +1,8 @@
 <?php
 
-namespace Parameter\Types\File;
+namespace Paraman\Types\File;
 
-use Parameter\Types\BaseRules;
+use Paraman\Types\BaseRules;
 
 class Rules extends BaseRules
 {

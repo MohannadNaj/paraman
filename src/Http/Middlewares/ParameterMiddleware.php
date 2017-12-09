@@ -1,9 +1,9 @@
 <?php
 
-namespace Parameter\Http\Middlewares;
+namespace Paraman\Http\Middlewares;
 
 use Closure;
-use Parameter\ParametersManager;
+use Paraman\ParametersManager;
 
 class ParameterMiddleware
 {

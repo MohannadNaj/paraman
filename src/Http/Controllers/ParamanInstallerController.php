@@ -1,10 +1,10 @@
 <?php
 
-namespace Parameter\Http\Controllers;
+namespace Paraman\Http\Controllers;
 
 use File;
 use Artisan;
-use Parameter\ParametersManager;
+use Paraman\ParametersManager;
 
 class ParamanInstallerController extends BaseController
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Parameter\Types;
+namespace Paraman\Types;
 
-use Parameter\ParametersManager;
+use Paraman\ParametersManager;
 
 abstract class BaseRules
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Parameter\Tests\Model\CustomType;
+namespace Paraman\Tests\Model\CustomType;
 
-use Parameter\Types\BaseBuilder;
+use Paraman\Types\BaseBuilder;
 
 class Builder extends BaseBuilder
 {

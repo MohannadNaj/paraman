@@ -1,7 +1,7 @@
 <?php
-namespace Parameter;
+namespace Paraman;
 
-use Parameter\Parameter;
+use Paraman\Parameter;
 
 class ParametersSingleton {
 

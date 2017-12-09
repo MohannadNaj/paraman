@@ -1,8 +1,8 @@
 <?php
 
-namespace Parameter\Types\Boolean;
+namespace Paraman\Types\Boolean;
 
-use Parameter\Types\BaseBuilder;
+use Paraman\Types\BaseBuilder;
 
 class Builder extends BaseBuilder
 {

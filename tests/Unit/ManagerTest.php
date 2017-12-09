@@ -1,13 +1,13 @@
 <?php
 
-namespace Parameter\Tests\Unit;
+namespace Paraman\Tests\Unit;
 
 use File;
 use Mockery;
 use StdClass;
-use Parameter\Tests\User;
-use Parameter\ParametersManager;
-use Parameter\Tests\UnitTestCase;
+use Paraman\Tests\User;
+use Paraman\ParametersManager;
+use Paraman\Tests\UnitTestCase;
 
 class ManagerTest extends UnitTestCase
 {
@@ -20,7 +20,7 @@ class ManagerTest extends UnitTestCase
 
 	public function test_static_call_class_path()
 	{
-		$this->assertEquals('Parameter\Types\Text\Builder' ,
+		$this->assertEquals('Paraman\Types\Text\Builder' ,
 			ParametersManager::builderClassPath('text'));
 	}
 

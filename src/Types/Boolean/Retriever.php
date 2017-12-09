@@ -1,8 +1,8 @@
 <?php
 
-namespace Parameter\Types\Boolean;
+namespace Paraman\Types\Boolean;
 
-use Parameter\Types\BaseValueRetriever;
+use Paraman\Types\BaseValueRetriever;
 
 class Retriever extends BaseValueRetriever
 {

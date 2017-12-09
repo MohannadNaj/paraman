@@ -1,15 +1,15 @@
 <?php
 
-namespace Parameter\Tests\Controller;
+namespace Paraman\Tests\Controller;
 
 use Mockery;
 use Closure;
 use StdClass;
-use Parameter\Tests\User;
-use Parameter\ParametersManager;
+use Paraman\Tests\User;
+use Paraman\ParametersManager;
 use Illuminate\Http\UploadedFile;
-use Parameter\Tests\DatabaseTestTrait;
-use Parameter\Tests\ControllerTestCase;
+use Paraman\Tests\DatabaseTestTrait;
+use Paraman\Tests\ControllerTestCase;
 use Illuminate\Support\Facades\Storage;
 
 class ParamanInstallerControllerTest extends ControllerTestCase

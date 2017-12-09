@@ -1,15 +1,15 @@
 <?php
 
-namespace Parameter\Tests\_database;
+namespace Paraman\Tests\_database;
 
 use File;
 use Mockery;
 use StdClass;
-use Parameter\Parameter;
+use Paraman\Parameter;
 use Faker\Factory as Faker;
-use Parameter\ParameterObserver;
-use Parameter\ParametersManager;
-use Parameter\Tests\ModelTestCase;
+use Paraman\ParameterObserver;
+use Paraman\ParametersManager;
+use Paraman\Tests\ModelTestCase;
 
 class TestDataGenerator extends ModelTestCase
 {

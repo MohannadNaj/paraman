@@ -1,8 +1,8 @@
 <?php
 
-namespace Parameter\Types\Integer;
+namespace Paraman\Types\Integer;
 
-use Parameter\Types\BaseValueRetriever;
+use Paraman\Types\BaseValueRetriever;
 
 class Retriever extends BaseValueRetriever
 {

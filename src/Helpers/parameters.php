@@ -1,6 +1,6 @@
 <?php
 
-use Parameter\Parameter;
+use Paraman\Parameter;
 
 // return parameters collection, or a specified parameter value
 if (! function_exists('param')) {

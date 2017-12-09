@@ -1,8 +1,8 @@
 <?php
 
-namespace Parameter\Types;
+namespace Paraman\Types;
 
-use Parameter\Parameter;
+use Paraman\Parameter;
 
 abstract class BaseBuilder
 {

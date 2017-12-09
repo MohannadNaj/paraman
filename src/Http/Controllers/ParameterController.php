@@ -1,15 +1,15 @@
 <?php
 
-namespace Parameter\Http\Controllers;
+namespace Paraman\Http\Controllers;
 
 use Storage ;
-use Parameter\Parameter;
+use Paraman\Parameter;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Parameter\ParametersManager;
-use Parameter\ParametersValidator;
+use Paraman\ParametersManager;
+use Paraman\ParametersValidator;
 use Illuminate\Database\QueryException;
-use \Parameter\Http\Middlewares\ParameterMiddleware;
+use \Paraman\Http\Middlewares\ParameterMiddleware;
 
 class ParameterController extends BaseController
 {

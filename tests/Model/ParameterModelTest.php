@@ -1,14 +1,14 @@
 <?php
 
-namespace Parameter\Tests\Model;
+namespace Paraman\Tests\Model;
 
 use Mockery;
 use StdClass;
-use Parameter\Parameter;
+use Paraman\Parameter;
 use Faker\Factory as Faker;
-use Parameter\ParameterObserver;
-use Parameter\ParametersManager;
-use Parameter\Tests\ModelTestCase;
+use Paraman\ParameterObserver;
+use Paraman\ParametersManager;
+use Paraman\Tests\ModelTestCase;
 
 class ParameterModelTestCase extends ModelTestCase
 {
@@ -103,7 +103,7 @@ class ParameterModelTestCase extends ModelTestCase
 
     public function test_extend_types()
     {
-        ParametersManager::extend('customType','Parameter\Tests\Model\CustomType');
+        ParametersManager::extend('customType','Paraman\Tests\Model\CustomType');
 
         Parameter::create(['type'=> 'customType', 'value'=> 'foo bar','name'=>'custom_foo_bar']);
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Parameter\Tests;
+namespace Paraman\Tests;
 
 abstract class ControllerTestCase extends TestCase {
 

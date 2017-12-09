@@ -28,13 +28,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Parameter\\": "src/"
+            "Paraman\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Parameter\\": "src/",
-            "Parameter\\Tests\\": "tests/"
+            "Paraman\\": "src/",
+            "Paraman\\Tests\\": "tests/"
         }
     },
     "extra": {
@@ -43,7 +43,7 @@
         },
         "laravel": {
             "providers": [
-                "Parameter\\Providers\\ParametersServiceProvider"
+                "Paraman\\Providers\\ParametersServiceProvider"
             ]
         }
     },

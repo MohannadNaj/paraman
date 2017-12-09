@@ -1,7 +1,7 @@
 <?php
 
-use Parameter\Parameter;
-use Parameter\ParametersManager;
+use Paraman\Parameter;
+use Paraman\ParametersManager;
 use Illuminate\Http\UploadedFile;
 
 $factory->define(

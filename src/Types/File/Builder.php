@@ -1,8 +1,8 @@
 <?php
 
-namespace Parameter\Types\File;
+namespace Paraman\Types\File;
 
-use Parameter\Types\BaseBuilder;
+use Paraman\Types\BaseBuilder;
 
 class Builder extends BaseBuilder
 {

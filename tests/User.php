@@ -1,6 +1,6 @@
 <?php
 
-namespace Parameter\Tests;
+namespace Paraman\Tests;
 
 use Illuminate\Foundation\Auth\User as AuthUser;
 
