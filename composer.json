@@ -1,9 +1,13 @@
 {
     "name": "mohannadnaj/paraman",
-    "description": "Laravel Package for Managing App Parameters/Settings.",
+    "description": "Laravel package for managing app Parameters/Settings.",
     "license": "MIT",
     "type": "package",
-    "homepage": "https://github.com/MohannadNaj/laravel-parameters",
+    "support": {
+        "issues": "https://github.com/MohannadNaj/paraman/issues",
+        "source": "https://github.com/MohannadNaj/paraman"
+    },
+    "homepage": "https://github.com/MohannadNaj/paraman",
     "authors": [
       {
         "name": "Mohannad Najjar",
@@ -12,7 +16,7 @@
     ],
     "keywords": ["framework", "laravel"],
     "require": {
-        "php": ">=5.6.4",
+        "php": ">=7.0",
         "illuminate/database": "~5.5",
         "illuminate/http": "~5.5",
         "illuminate/support": "~5.5",
