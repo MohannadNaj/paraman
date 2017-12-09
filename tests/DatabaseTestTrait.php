@@ -33,7 +33,7 @@ trait DatabaseTestTrait
         ]);
 
         $app['config']->set('database.connections.parameters', $app['config']->get('database.connections.sqlite'));
-        $app['config']->set('parameters.default', 'sqlite');
+        $app['config']->set('parameters.default_connection', 'sqlite');
     }
 
     protected function resetDatabase()

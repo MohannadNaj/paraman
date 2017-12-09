@@ -1,7 +1,7 @@
 <?php
 
 return array(
-  'default' => 'parameters_default',
+  'default_connection' => 'parameters_default',
   'connections' => array(
     'parameters_default' => array(
       'driver'   => 'sqlite',
