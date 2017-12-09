@@ -14,7 +14,8 @@ if (! function_exists('param')) {
         	}
 
             if(! $param) {
-                $param = Parameter::create(compact('name','type','value'));
+                $label = $name;
+                $param = Parameter::create(compact('name','type','value','label'));
             }
 
     		return $param ? $param->getValue() : null;

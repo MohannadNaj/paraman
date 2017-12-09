@@ -150,4 +150,13 @@ class ParameterModelTestCase extends ModelTestCase
         $this->assertSame(param('foo_bar_param'), 'foo bar');
     }
 
+    public function test_helper_method_label_equals_name()
+    {
+        $param = param('foo', 'textfield');
+
+        $this->assertSame('foo',
+            param()->where('name','foo')->first()->label
+        );
+    }
+
 }
