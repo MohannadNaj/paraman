@@ -27,9 +27,9 @@ trait DatabaseTestTrait
         $app['config']->set('database.default', 'sqlite');
 
         $app['config']->set('database.connections.sqlite', [
-            'driver' => 'sqlite',
+            'driver'   => 'sqlite',
             'database' => $this->getTempDirectory().'/database.sqlite',
-            'prefix' => '',
+            'prefix'   => '',
         ]);
 
         $app['config']->set('database.connections.parameters', $app['config']->get('database.connections.sqlite'));

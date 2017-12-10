@@ -2,40 +2,40 @@
 
 namespace Paraman;
 
-use Paraman\ParametersManager;
-
-trait ParametersModelTrait {
-	// allow users to extend paraman types
+trait ParametersModelTrait
+{
+    // allow users to extend paraman types
     public function getValue()
     {
         return $this->value;
     }
 
-	public function buildValue()
-	{
-		$parameterBuilderClassName = ParametersManager::BuilderClassPath($this->type);
-		$parameterBuilder = new $parameterBuilderClassName($this);
-		$parameterBuilder->build();
-	}
+    public function buildValue()
+    {
+        $parameterBuilderClassName = ParametersManager::BuilderClassPath($this->type);
+        $parameterBuilder = new $parameterBuilderClassName($this);
+        $parameterBuilder->build();
+    }
 
-	public function buildMetaValue()
-	{
-		$parameterBuilderClassName = ParametersManager::BuilderClassPath($this->type);
-		$parameterBuilder = new $parameterBuilderClassName($this);
-		$parameterBuilder->buildMeta();
-	}
+    public function buildMetaValue()
+    {
+        $parameterBuilderClassName = ParametersManager::BuilderClassPath($this->type);
+        $parameterBuilder = new $parameterBuilderClassName($this);
+        $parameterBuilder->buildMeta();
+    }
 
-	public function getValueAttribute($value)
-	{
-		$parameterRetrieverClassName = ParametersManager::RetrieverClassPath($this->type);
-		$parameterRetriever = new $parameterRetrieverClassName($value);
+    public function getValueAttribute($value)
+    {
+        $parameterRetrieverClassName = ParametersManager::RetrieverClassPath($this->type);
+        $parameterRetriever = new $parameterRetrieverClassName($value);
 
-		return $parameterRetriever->getValue();
-	}
+        return $parameterRetriever->getValue();
+    }
 
-	public static function getColumns()
-	{
-		$instance = new self;
-		return $instance->getConnection()->getSchemaBuilder()->getColumnListing($instance->getTable());
-	}
+    public static function getColumns()
+    {
+        $instance = new self();
+
+        return $instance->getConnection()->getSchemaBuilder()->getColumnListing($instance->getTable());
+    }
 }

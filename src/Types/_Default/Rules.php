@@ -1,4 +1,5 @@
 <?php
+
 namespace Paraman\Types\_Default;
 
 use Paraman\Types\BaseRules;

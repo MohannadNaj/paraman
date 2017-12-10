@@ -1,4 +1,5 @@
 <?php
+
 namespace Paraman\Types\Textfield;
 
 use Paraman\Types\BaseRules;

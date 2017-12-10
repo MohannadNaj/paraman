@@ -2,15 +2,8 @@
 
 namespace Paraman\Tests\Controller;
 
-use Mockery;
-use Closure;
-use StdClass;
-use Paraman\Tests\User;
 use Paraman\ParametersManager;
-use Illuminate\Http\UploadedFile;
-use Paraman\Tests\DatabaseTestTrait;
 use Paraman\Tests\ControllerTestCase;
-use Illuminate\Support\Facades\Storage;
 
 class ParamanInstallerControllerTest extends ControllerTestCase
 {
@@ -50,7 +43,7 @@ class ParamanInstallerControllerTest extends ControllerTestCase
         $response = $this->decodeResponseJson();
         $responseString = strtolower(implode('', (array) $response['output']));
 
-        foreach (['migrated','parameters'] as $message) {
+        foreach (['migrated', 'parameters'] as $message) {
             $this->assertContains($message, $responseString);
         }
 

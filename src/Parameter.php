@@ -2,9 +2,8 @@
 
 namespace Paraman;
 
-use Illuminate\Database\Eloquent\Model;
-use Paraman\ParametersModelTrait;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 
 class Parameter extends Model
 {
@@ -12,7 +11,7 @@ class Parameter extends Model
 
     protected $connection = 'parameters';
     protected $guarded = ['id'];
-    protected $appends = ['humanizedCreatedAt','humanizedUpdatedAt'];
+    protected $appends = ['humanizedCreatedAt', 'humanizedUpdatedAt'];
     protected $casts = ['meta'=>'array'];
 
     public function category()

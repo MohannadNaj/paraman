@@ -6,15 +6,15 @@ use Paraman\Parameter;
 
 abstract class BaseBuilder
 {
-    protected $loggableFields = ['value','label','category_id'];
+    protected $loggableFields = ['value', 'label', 'category_id'];
     protected $parameter;
 
-    public function __construct(Parameter & $parameter)
+    public function __construct(Parameter &$parameter)
     {
-        $this->parameter = & $parameter;
+        $this->parameter = &$parameter;
     }
 
-    public abstract function buildValue();
+    abstract public function buildValue();
 
     public function build()
     {
@@ -23,32 +23,32 @@ abstract class BaseBuilder
 
     public function buildMeta()
     {
-        $parameter = & $this->parameter;
+        $parameter = &$this->parameter;
         $meta = $parameter->meta;
 
-        if(! $meta)
+        if (!$meta) {
             $meta = [];
+        }
 
         $original = collect($parameter->getOriginal())->only($this->loggableFields);
 
         $dirtyFields = $parameter->getDirty();
 
-        foreach($dirtyFields as $key => $value) {
-            if(is_array($value)) {
+        foreach ($dirtyFields as $key => $value) {
+            if (is_array($value)) {
                 $dirtyFields[$key] = json_encode($value);
             }
         }
 
         $diff = collect($dirtyFields)->only($this->loggableFields)->diffAssoc($original)->toArray();
 
-        foreach($diff as $key => $value)
-        {
+        foreach ($diff as $key => $value) {
             $meta['logs'][] = [
-                'old'   => $original[$key],
-                'new'   => $value,
+                'old'     => $original[$key],
+                'new'     => $value,
                 'auth_id' => auth()->id(),
-                'field' => $key,
-                'date'  => \Carbon\Carbon::now()->toDateTimeString()];
+                'field'   => $key,
+                'date'    => \Carbon\Carbon::now()->toDateTimeString(), ];
         }
 
         $parameter->meta = $meta;

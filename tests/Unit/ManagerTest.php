@@ -2,158 +2,156 @@
 
 namespace Paraman\Tests\Unit;
 
-use File;
-use Mockery;
-use StdClass;
-use Paraman\Tests\User;
 use Paraman\ParametersManager;
 use Paraman\Tests\UnitTestCase;
+use Paraman\Tests\User;
 
 class ManagerTest extends UnitTestCase
 {
-	public function test_static_arrays_visible()
-	{
-		$this->assertArrayContains(['textfield','boolean'], ParametersManager::getSupportedTypes() );
-		$this->assertArrayContains(['name'], ParametersManager::$addCategoryRequestFields);
-		$this->assertArrayContains(['name'], ParametersManager::$createParameterFields);
-	}
+    public function test_static_arrays_visible()
+    {
+        $this->assertArrayContains(['textfield', 'boolean'], ParametersManager::getSupportedTypes());
+        $this->assertArrayContains(['name'], ParametersManager::$addCategoryRequestFields);
+        $this->assertArrayContains(['name'], ParametersManager::$createParameterFields);
+    }
 
-	public function test_static_call_class_path()
-	{
-		$this->assertEquals('Paraman\Types\Text\Builder' ,
-			ParametersManager::builderClassPath('text'));
-	}
+    public function test_static_call_class_path()
+    {
+        $this->assertEquals('Paraman\Types\Text\Builder',
+            ParametersManager::builderClassPath('text'));
+    }
 
-	public function test_can_extend_types()
-	{
-		$oldTypes = ParametersManager::getSupportedTypes();
+    public function test_can_extend_types()
+    {
+        $oldTypes = ParametersManager::getSupportedTypes();
 
-		ParametersManager::extend('custom', 'App\Custom');
-		
-		$oldTypes[] = 'custom';
+        ParametersManager::extend('custom', 'App\Custom');
 
-		$this->assertArrayContains(['custom'], ParametersManager::getSupportedTypes());
-		$this->assertArrayContains($oldTypes, ParametersManager::getSupportedTypes());
+        $oldTypes[] = 'custom';
 
-		$this->assertEquals('App\Custom\Builder' ,
-			ParametersManager::builderClassPath('custom'));
+        $this->assertArrayContains(['custom'], ParametersManager::getSupportedTypes());
+        $this->assertArrayContains($oldTypes, ParametersManager::getSupportedTypes());
 
-		ParametersManager::unextend('custom');
-	}
+        $this->assertEquals('App\Custom\Builder',
+            ParametersManager::builderClassPath('custom'));
 
-	public function test_get_category_defaults()
-	{
-		$categoryDefaults = ParametersManager::getCategoryDefaults();
+        ParametersManager::unextend('custom');
+    }
 
-		$this->assertArrayContains(
-			['is_category','name','type'],
-			array_keys($categoryDefaults)
-		);
+    public function test_get_category_defaults()
+    {
+        $categoryDefaults = ParametersManager::getCategoryDefaults();
 
-		$this->assertTrue($categoryDefaults['is_category']);
-	}
+        $this->assertArrayContains(
+            ['is_category', 'name', 'type'],
+            array_keys($categoryDefaults)
+        );
 
-	public function test_catch_exception_on_get_parameters_columns()
-	{
-		$parametersColumns = ParametersManager::getParametersColumns();
+        $this->assertTrue($categoryDefaults['is_category']);
+    }
 
-		// on this test no database is configured
-		$this->assertArrayContains(
-			['id','is_category','name','type'],
-			array_keys($parametersColumns)
-		, 'Try/Catch retrieving parameter columns if the database not configured properly');
+    public function test_catch_exception_on_get_parameters_columns()
+    {
+        $parametersColumns = ParametersManager::getParametersColumns();
 
-		$this->assertNull($parametersColumns['name']);
-	}
+        // on this test no database is configured
+        $this->assertArrayContains(
+            ['id', 'is_category', 'name', 'type'],
+            array_keys($parametersColumns), 'Try/Catch retrieving parameter columns if the database not configured properly');
 
-	public function test_need_installation_no_database()
-	{
-		// note: on this whole unit test case no database is configured
-		$this->assertTrue(ParametersManager::needInstallation(), 
-			'return true if no database is configured and the default `sqlite` configuration still in use');
-	}
-	public function test_need_installation_database_driver_changed()
-	{
-		// database driver changed
-		config()->set('database.connections.parameters.driver','mysql');
+        $this->assertNull($parametersColumns['name']);
+    }
 
-		$this->assertFalse(ParametersManager::needInstallation(), 
-			'return false if the default configuration the database driver is changed');
-	}
+    public function test_need_installation_no_database()
+    {
+        // note: on this whole unit test case no database is configured
+        $this->assertTrue(ParametersManager::needInstallation(),
+            'return true if no database is configured and the default `sqlite` configuration still in use');
+    }
 
-	public function test_need_installation_database_config_changed()
-	{
-		$this->assertTrue(ParametersManager::needInstallation());
+    public function test_need_installation_database_driver_changed()
+    {
+        // database driver changed
+        config()->set('database.connections.parameters.driver', 'mysql');
 
-		config()->set('database.connections.parameters.prefix','aaa');
+        $this->assertFalse(ParametersManager::needInstallation(),
+            'return false if the default configuration the database driver is changed');
+    }
 
-		$this->assertFalse(ParametersManager::needInstallation(), 
-			'return false if any key or value in the default configuration is modified');
-	}
+    public function test_need_installation_database_config_changed()
+    {
+        $this->assertTrue(ParametersManager::needInstallation());
 
-	public function test_need_installation_database_file()
-	{
-		file_put_contents(ParametersManager::getDatabasePath(), "");
+        config()->set('database.connections.parameters.prefix', 'aaa');
 
-		$this->assertFalse(ParametersManager::needInstallation(), 
-			'return false if the database is created');
+        $this->assertFalse(ParametersManager::needInstallation(),
+            'return false if any key or value in the default configuration is modified');
+    }
 
-		unlink(ParametersManager::getDatabasePath());
+    public function test_need_installation_database_file()
+    {
+        file_put_contents(ParametersManager::getDatabasePath(), '');
 
-		$this->assertTrue(ParametersManager::needInstallation());
-	}
+        $this->assertFalse(ParametersManager::needInstallation(),
+            'return false if the database is created');
 
-	public function test_auth_visitor()
-	{
-		$this->assertFalse(ParametersManager::check(request()));
-	}
+        unlink(ParametersManager::getDatabasePath());
 
-	public function test_auth_canEditParameters_user()
-	{
-		request()->setUserResolver(function () {
-		    return new User();
-		});
+        $this->assertTrue(ParametersManager::needInstallation());
+    }
 
-		$this->assertTrue(ParametersManager::check(request()));
-	}
+    public function test_auth_visitor()
+    {
+        $this->assertFalse(ParametersManager::check(request()));
+    }
 
-	public function test_auth_local_environment()
-	{
-		app()->detectEnvironment(function() { return 'local';});
-		$this->assertTrue(ParametersManager::check(request()));
-	}
+    public function test_auth_canEditParameters_user()
+    {
+        request()->setUserResolver(function () {
+            return new User();
+        });
 
-	public function test_auth_callback()
-	{
-		ParametersManager::auth(function() {
-			return false;
-		});
-		$this->assertFalse(ParametersManager::check(request()));
-		ParametersManager::auth(function() {
-			return true;
-		});
-		$this->assertTrue(ParametersManager::check(request()));
-	}
+        $this->assertTrue(ParametersManager::check(request()));
+    }
 
-	public function test_client_data_has_installation_data()
-	{
-		$this->assertTrue(ParametersManager::needInstallation());
+    public function test_auth_local_environment()
+    {
+        app()->detectEnvironment(function () {
+            return 'local';
+        });
+        $this->assertTrue(ParametersManager::check(request()));
+    }
 
-		$clientData = ParametersManager::clientData();
+    public function test_auth_callback()
+    {
+        ParametersManager::auth(function () {
+            return false;
+        });
+        $this->assertFalse(ParametersManager::check(request()));
+        ParametersManager::auth(function () {
+            return true;
+        });
+        $this->assertTrue(ParametersManager::check(request()));
+    }
 
-		$this->assertArrayContains(['installationData'], array_keys($clientData));
-		$this->assertArrayContains(['databasePath','migrationPaths'], array_keys($clientData['installationData']));
-	}
+    public function test_client_data_has_installation_data()
+    {
+        $this->assertTrue(ParametersManager::needInstallation());
 
-	public function test_client_data_has_no_installation_data_if_dont_need_installation()
-	{
-		$this->test_need_installation_database_driver_changed();
+        $clientData = ParametersManager::clientData();
 
-		$this->assertFalse(ParametersManager::needInstallation());
+        $this->assertArrayContains(['installationData'], array_keys($clientData));
+        $this->assertArrayContains(['databasePath', 'migrationPaths'], array_keys($clientData['installationData']));
+    }
 
-		$clientData = ParametersManager::clientData();
+    public function test_client_data_has_no_installation_data_if_dont_need_installation()
+    {
+        $this->test_need_installation_database_driver_changed();
 
-		$this->assertFalse(isset($clientData['installationData']));
-	}
+        $this->assertFalse(ParametersManager::needInstallation());
 
+        $clientData = ParametersManager::clientData();
+
+        $this->assertFalse(isset($clientData['installationData']));
+    }
 }

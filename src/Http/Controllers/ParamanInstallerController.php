@@ -2,8 +2,8 @@
 
 namespace Paraman\Http\Controllers;
 
-use File;
 use Artisan;
+use File;
 use Paraman\ParametersManager;
 
 class ParamanInstallerController extends BaseController
@@ -29,6 +29,6 @@ class ParamanInstallerController extends BaseController
         $exitCode = Artisan::call('migrate');
         $output = Artisan::output();
 
-        return compact('exitCode','output');
+        return compact('exitCode', 'output');
     }
 }

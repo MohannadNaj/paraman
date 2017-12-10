@@ -2,14 +2,13 @@
 
 namespace Paraman\Http\Controllers;
 
-use Storage ;
-use Paraman\Parameter;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Paraman\Parameter;
 use Paraman\ParametersManager;
 use Paraman\ParametersValidator;
-use Illuminate\Database\QueryException;
-use \Paraman\Http\Middlewares\ParameterMiddleware;
+use Storage;
 
 class ParameterController extends BaseController
 {
@@ -20,7 +19,6 @@ class ParameterController extends BaseController
 
     public function login()
     {
-
     }
 
     public function index()
@@ -35,13 +33,13 @@ class ParameterController extends BaseController
             $needInstallation = ParametersManager::needInstallation();
             $needMigration = ParametersManager::needMigration();
 
-            if(! $needInstallation && ! $needMigration)
+            if (!$needInstallation && !$needMigration) {
                 throw $e;
-
-            $data = $data;// + compact('needInstallation','needMigration');
+            }
+            $data = $data; // + compact('needInstallation','needMigration');
         }
 
-        return view('parameters::index',$data );
+        return view('parameters::index', $data);
     }
 
     public function store(Request $request)
@@ -73,13 +71,14 @@ class ParameterController extends BaseController
 
     public function addPhoto(Request $request)
     {
-        if(! $request->hasFile('file') || ! $request->file('file')->isValid())
+        if (!$request->hasFile('file') || !$request->file('file')->isValid()) {
             return $this->failedUploadResponse();
+        }
 
         $this->validate($request,
-            [ 'file' => ParametersValidator::updateRules('file')['value'] ]);
-        
-        $path = $request->file->store('uploads','local');
+            ['file' => ParametersValidator::updateRules('file')['value']]);
+
+        $path = $request->file->store('uploads', 'local');
 
         return ['path'=>$path];
     }
@@ -89,7 +88,7 @@ class ParameterController extends BaseController
         $this->validate($request, ['path'=>'required', 'parameter'=>'required|integer']);
         $path = $request->path;
 
-        if (! Storage::disk('local')->exists($path)) {
+        if (!Storage::disk('local')->exists($path)) {
             return $this->failedUploadResponse();
         }
 
@@ -97,7 +96,7 @@ class ParameterController extends BaseController
 
         $public = Storage::disk('public')->put($path, $local);
 
-        $data = ['path'=> $path, 'url'=> Storage::disk('public')->url($path) ];
+        $data = ['path'=> $path, 'url'=> Storage::disk('public')->url($path)];
 
         $parameter = param()->where('id', $request->parameter)->first();
 
@@ -115,6 +114,7 @@ class ParameterController extends BaseController
 
         return ['parameter'=>$parameter];
     }
+
     public function addCategory(Request $request)
     {
         $data = ParametersManager::getCategoryDefaults();

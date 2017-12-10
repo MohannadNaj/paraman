@@ -2,11 +2,9 @@
 
 namespace Paraman\Tests;
 
-use Illuminate\Database\Schema\Blueprint;
-use Paraman\Providers\ParametersServiceProvider;
-use Orchestra\Testbench\BrowserKit\TestCase as OrchestraTestCase;
-
 use Mockery;
+use Orchestra\Testbench\BrowserKit\TestCase as OrchestraTestCase;
+use Paraman\Providers\ParametersServiceProvider;
 
 abstract class TestCase extends OrchestraTestCase
 {

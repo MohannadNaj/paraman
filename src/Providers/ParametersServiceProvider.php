@@ -4,9 +4,9 @@ namespace Paraman\Providers;
 
 use Config;
 use Illuminate\Support\ServiceProvider;
-use Paraman\ParametersSingleton;
 use Paraman\Parameter;
 use Paraman\ParameterObserver;
+use Paraman\ParametersSingleton;
 
 class ParametersServiceProvider extends ServiceProvider
 {
@@ -29,7 +29,7 @@ class ParametersServiceProvider extends ServiceProvider
 
         $this->loadMigrationsFrom($migrationPath);
 
-        $this->loadViewsFrom($viewsPath , 'parameters');
+        $this->loadViewsFrom($viewsPath, 'parameters');
 
         $this->loadRoutesFrom($routesPath);
 
@@ -65,17 +65,18 @@ class ParametersServiceProvider extends ServiceProvider
 
     public function setConnection()
     {
-      $connection = Config::get('parameters.default_connection');
-
-      if ($connection !== 'parameters_default') {
-        $wardrobeConfig = Config::get('database.connections.'.$connection);
-      } else {
         $connection = Config::get('parameters.default_connection');
-        $wardrobeConfig = Config::get('parameters.connections.'.$connection);
-      }
 
-      Config::set('database.connections.parameters', $wardrobeConfig);
+        if ($connection !== 'parameters_default') {
+            $wardrobeConfig = Config::get('database.connections.'.$connection);
+        } else {
+            $connection = Config::get('parameters.default_connection');
+            $wardrobeConfig = Config::get('parameters.connections.'.$connection);
+        }
+
+        Config::set('database.connections.parameters', $wardrobeConfig);
     }
+
     /**
      * Register the application services.
      *
@@ -83,7 +84,7 @@ class ParametersServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        require_once(realpath(__DIR__. '/../Helpers/parameters.php'));
+        require_once realpath(__DIR__.'/../Helpers/parameters.php');
         new ParametersSingleton();
     }
 }
