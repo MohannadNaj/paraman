@@ -19,8 +19,7 @@
         "php": ">=7.0",
         "illuminate/database": "~5.5",
         "illuminate/http": "~5.5",
-        "illuminate/support": "~5.5",
-        "sebastian/diff": "^2.0"
+        "illuminate/support": "~5.5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
