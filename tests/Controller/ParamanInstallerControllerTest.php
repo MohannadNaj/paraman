@@ -22,10 +22,12 @@ class ParamanInstallerControllerTest extends ControllerTestCase
         $this->dbPath = ParametersManager::getDatabasePath();
     }
 
-    public function test_install_createDB()
+    public function test_install_createDB($thenRemoveDB = true)
     {
         //assert we are running this test in need-installation environment
-        return $this->assertTrue(ParametersManager::needInstallation());
+        if(file_exists($this->dbPath))
+            @unlink($this->dbPath);
+        $this->assertTrue(ParametersManager::needInstallation());
         $this->authUserJson('POST', '/parameters/createDB');
 
         $this->seeStatusCode(200);
@@ -34,11 +36,13 @@ class ParamanInstallerControllerTest extends ControllerTestCase
 
         $this->assertTrue(!empty($response['path']));
         $this->assertTrue(file_exists($response['path']));
+        if($thenRemoveDB)
+            @unlink($this->dbPath);
     }
 
     public function test_install_migrate()
     {
-        $this->test_install_createDB();
+        $this->test_install_createDB(false);
         config()->set('database.default', 'testing');
         config()->set('database.connections.parameters', config('database.connections.testing'));
         $this->authUserJson('POST', '/parameters/migrate');
@@ -55,5 +59,6 @@ class ParamanInstallerControllerTest extends ControllerTestCase
         }
 
         $this->assertTrue(isset($response['exitCode']));
+        @unlink($this->dbPath);
     }
 }
