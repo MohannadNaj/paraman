@@ -2,40 +2,44 @@
 
 namespace Paraman;
 
-use Paraman\ParametersManager;
+class ParametersValidator
+{
+    public static function newRules($type)
+    {
+        return static::getRules($type, 'new');
+    }
 
-class ParametersValidator {
-	public static function newRules($type)
-	{
-		return static::getRules($type, 'new');
-	}
+    public static function updateRules($type)
+    {
+        return static::getRules($type, 'update');
+    }
 
-	public static function updateRules($type) {
-		return static::getRules($type, 'update');
-	}
+    private static function getRules($type, $operation)
+    {
+        $rulesClass = static::getRulesClass($type);
+        $rulesMethod = static::getOperationRulesMethod($operation);
 
-	private static function getRules($type, $operation)
-	{
-		$rulesClass = static::getRulesClass($type);
-		$rulesMethod = static::getOperationRulesMethod($operation);
-		return (new $rulesClass)->$rulesMethod();
-	}
+        return (new $rulesClass())->$rulesMethod();
+    }
 
-	private static function getRulesClass($type) {
-		$classPath = static::getRulesClassPath($type);
+    private static function getRulesClass($type)
+    {
+        $classPath = static::getRulesClassPath($type);
 
-		if(! class_exists($classPath))
-			$classPath = static::getRulesClassPath('_Default');
+        if (!class_exists($classPath)) {
+            $classPath = static::getRulesClassPath('_Default');
+        }
 
-		return $classPath;
-	}
+        return $classPath;
+    }
 
-	private static function getOperationRulesMethod($operation) {
-			return 'get' . ucfirst($operation) . 'Rules';
-	}
+    private static function getOperationRulesMethod($operation)
+    {
+        return 'get'.ucfirst($operation).'Rules';
+    }
 
-	private static function getRulesClassPath($type)
-	{
-		return ParametersManager::rulesClassPath( $type );
-	}
+    private static function getRulesClassPath($type)
+    {
+        return ParametersManager::rulesClassPath($type);
+    }
 }

@@ -25,6 +25,9 @@
             </exclude>
         </whitelist>
     </filter>
+    <logging>
+             <log type="coverage-clover" target="clover.xml"/>
+    </logging>
     <php>
         <env name="APP_URL" value="mysite.dev"/>
     </php>

@@ -3,21 +3,19 @@
 namespace Paraman\Tests\Model;
 
 use Mockery;
-use StdClass;
 use Paraman\Parameter;
-use Faker\Factory as Faker;
 use Paraman\ParameterObserver;
 use Paraman\ParametersManager;
 use Paraman\Tests\ModelTestCase;
 
-class ParameterModelTestCase extends ModelTestCase
+class ParameterModelTest extends ModelTestCase
 {
     public function test_parameter_contains_columns_for_frontend()
     {
         $columns = Parameter::getColumns();
         $essentialColumns = [
-            'id', 'name', 'label', 'type','meta',
-            'is_category', 'category_id', 'value'];
+            'id', 'name', 'label', 'type', 'meta',
+            'is_category', 'category_id', 'value', ];
         $this->assertArrayContains($essentialColumns, $columns);
     }
 
@@ -35,9 +33,9 @@ class ParameterModelTestCase extends ModelTestCase
 
         $this->assertSame(2, param(2));
 
-        $this->assertSame("3", param(3));
+        $this->assertSame('3', param(3));
 
-        $this->assertSame("4", param(4));
+        $this->assertSame('4', param(4));
     }
 
     public function test_parameter_observer_is_called()
@@ -57,7 +55,6 @@ class ParameterModelTestCase extends ModelTestCase
         ->shouldReceive('deleted')
         ->once();
 
-         
         app()->bind(ParameterObserver::class, function () use ($observer) {
             return $observer;
         });
@@ -73,13 +70,13 @@ class ParameterModelTestCase extends ModelTestCase
     public function test_parameters_signleton_is_up2date()
     {
         $this->assertEquals(0, param()->count());
-        
-        // on add
-    	$types = collect(ParametersManager::getSupportedTypes());
 
-	    for ($i=0; $i < 5; $i++) { 
-	        factory(Parameter::class)->create(['type'=>$types->random()]);
-	    }
+        // on add
+        $types = collect(ParametersManager::getSupportedTypes());
+
+        for ($i = 0; $i < 5; $i++) {
+            factory(Parameter::class)->create(['type'=>$types->random()]);
+        }
 
         $this->assertEquals(5, param()->count());
 
@@ -88,7 +85,7 @@ class ParameterModelTestCase extends ModelTestCase
         param()->random()->delete();
 
         $this->assertEquals(3, param()->count());
-    
+
         // on add & update
         $parameter = factory(Parameter::class)->create(['type'=>'integer']);
 
@@ -103,34 +100,34 @@ class ParameterModelTestCase extends ModelTestCase
 
     public function test_extend_types()
     {
-        ParametersManager::extend('customType','Paraman\Tests\Model\CustomType');
+        ParametersManager::extend('customType', 'Paraman\Tests\Model\CustomType');
 
-        Parameter::create(['type'=> 'customType', 'value'=> 'foo bar','name'=>'custom_foo_bar']);
+        Parameter::create(['type'=> 'customType', 'value'=> 'foo bar', 'name'=>'custom_foo_bar']);
 
         $this->assertEquals(param('custom_foo_bar'), 'fo');
         $this->assertArrayContains(['customType'], ParametersManager::clientData()['parametersTypes']);
         ParametersManager::unextend('customType');
     }
+
     public function test_changes_are_logged()
     {
-        $parameter = factory(Parameter::class)->create(['type'=>'boolean','value'=> false]);
+        $parameter = factory(Parameter::class)->create(['type'=>'boolean', 'value'=> false]);
 
         $this->assertSame($parameter->meta, []);
 
         $parameter->value = true;
         $parameter->save();
 
-        $this->assertSame( false, array_get($parameter->meta, 'logs.0.old'));
-        $this->assertSame("value", array_get($parameter->meta, 'logs.0.field'));
-        $this->assertSame( true, array_get($parameter->meta, 'logs.0.new'));
+        $this->assertSame(false, array_get($parameter->meta, 'logs.0.old'));
+        $this->assertSame('value', array_get($parameter->meta, 'logs.0.field'));
+        $this->assertSame(true, array_get($parameter->meta, 'logs.0.new'));
 
         $parameter->value = false;
         $parameter->save();
 
-
-        $this->assertSame( true, array_get($parameter->meta, 'logs.1.old'));
-        $this->assertSame("value", array_get($parameter->meta, 'logs.1.field'));
-        $this->assertSame( false, array_get($parameter->meta, 'logs.1.new'));
+        $this->assertSame(true, array_get($parameter->meta, 'logs.1.old'));
+        $this->assertSame('value', array_get($parameter->meta, 'logs.1.field'));
+        $this->assertSame(false, array_get($parameter->meta, 'logs.1.new'));
     }
 
     public function test_helper_method_can_create()
@@ -155,8 +152,7 @@ class ParameterModelTestCase extends ModelTestCase
         $param = param('foo', 'textfield');
 
         $this->assertSame('foo',
-            param()->where('name','foo')->first()->label
+            param()->where('name', 'foo')->first()->label
         );
     }
-
 }

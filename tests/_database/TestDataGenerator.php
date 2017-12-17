@@ -2,18 +2,15 @@
 
 namespace Paraman\Tests\_database;
 
-use File;
-use Mockery;
-use StdClass;
-use Paraman\Parameter;
 use Faker\Factory as Faker;
-use Paraman\ParameterObserver;
+use File;
+use Paraman\Parameter;
 use Paraman\ParametersManager;
 use Paraman\Tests\ModelTestCase;
 
 class TestDataGenerator extends ModelTestCase
 {
-    protected $output = "../../specs/setup/testData.json"; // relative to __DIR__
+    protected $output = '../../specs/setup/testData.json'; // relative to __DIR__
     protected $faker;
 
     public function setup()
@@ -41,7 +38,7 @@ class TestDataGenerator extends ModelTestCase
         ];
 
         $testData['categories'] = factory(Parameter::class, 3)
-            ->create(['type'=>'textfield','is_category'=>true])
+            ->create(['type'=>'textfield', 'is_category'=>true])
             ->toArray();
 
         $testData['categorized_parameters'] = $this->getCategorizedParameters(
@@ -50,7 +47,7 @@ class TestDataGenerator extends ModelTestCase
 
         $testData['modified_parameters'] = $this->getModifiedParameters();
 
-        $outputPath = __DIR__ . '/'. $this->output;
+        $outputPath = __DIR__.'/'.$this->output;
 
         File::put($outputPath, json_encode($testData, JSON_PRETTY_PRINT));
 
@@ -66,10 +63,10 @@ class TestDataGenerator extends ModelTestCase
 
         // modify the parameter at least once
         foreach ($data as $parameter) {
-            for ($i=0; $i <$this->faker->numberBetween(1,3); $i++) { 
-                $parameter->value = 
+            for ($i = 0; $i < $this->faker->numberBetween(1, 3); $i++) {
+                $parameter->value =
                     $this->{
-                        'modify' . ucfirst($parameter->type)
+                        'modify'.ucfirst($parameter->type)
                     }($parameter);
 
                 $parameter->save();
@@ -86,7 +83,7 @@ class TestDataGenerator extends ModelTestCase
         foreach ($categories as $category) {
             $categorizedParameters =
                 array_merge(
-                    $categorizedParameters ,
+                    $categorizedParameters,
                     factory(Parameter::class, 5)
                     ->create(['category_id' => $category['id']])
                     ->toArray()
@@ -101,26 +98,32 @@ class TestDataGenerator extends ModelTestCase
         return factory(Parameter::class, $count)
             ->create(is_null($type) ? null : ['type'=>$type]);
     }
-    protected function modifyBoolean($parameter = null) {
-        return ! $parameter->value;
+
+    protected function modifyBoolean($parameter = null)
+    {
+        return !$parameter->value;
     }
 
-    protected function modifyInteger($parameter = null) {
-        return ( $parameter->value / 2) +
+    protected function modifyInteger($parameter = null)
+    {
+        return ($parameter->value / 2) +
             $this->faker->numberBetween(1, $parameter->value - 1);
     }
 
-    protected function modifyTextfield($parameter = null) {
-        return $this->faker->word . ' '
-                . $this->makeFakeValueFor('textfield');
+    protected function modifyTextfield($parameter = null)
+    {
+        return $this->faker->word.' '
+                .$this->makeFakeValueFor('textfield');
     }
 
-    protected function modifyText($parameter = null) {
-        return $this->faker->word . ' '
-                . $this->makeFakeValueFor('text');
+    protected function modifyText($parameter = null)
+    {
+        return $this->faker->word.' '
+                .$this->makeFakeValueFor('text');
     }
 
-    protected function makeFakeValueFor($type) {
+    protected function makeFakeValueFor($type)
+    {
         return factory(Parameter::class)
             ->make(['type'=>$type])
             ->value;

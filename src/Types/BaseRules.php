@@ -27,10 +27,10 @@ abstract class BaseRules
     private function commonNewRules()
     {
         return [
-            'name'=>'unique:parameters.parameters|required',
-            'label' => 'required|max:255',
+            'name'        => 'unique:parameters.parameters|required',
+            'label'       => 'required|max:255',
             'category_id' => 'integer|nullable',
-            'type' => 'required|in:' . implode(ParametersManager::getSupportedTypes(),','),
+            'type'        => 'required|in:'.implode(ParametersManager::getSupportedTypes(), ','),
         ];
     }
 

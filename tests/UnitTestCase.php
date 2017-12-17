@@ -2,5 +2,6 @@
 
 namespace Paraman\Tests;
 
-abstract class UnitTestCase extends TestCase {
+abstract class UnitTestCase extends TestCase
+{
 }
