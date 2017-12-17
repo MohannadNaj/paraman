@@ -13,3 +13,4 @@ npm-debug.log
 composer.lock
 /notes.md
 *.sqlite
+tests/_reports
